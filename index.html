@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Generate catchy Instagram captions instantly with AI. Enter any keyword and get creative, engaging English captions perfect for your posts.">
+    <meta name="keywords" content="instagram caption generator, instagram captions, social media writing tool, caption ideas, instagram post captions">
+    <meta name="author" content="Instagram Caption Generator">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Instagram Caption Generator - Create Engaging Captions Instantly">
+    <meta property="og:description" content="Generate creative Instagram captions in seconds. Enter any keyword and get multiple unique caption ideas for your posts.">
+    <meta property="og:image" content="https://placehold.co/1200x630/833AB4/FFFFFF?text=Instagram+Caption+Generator">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Instagram Caption Generator">
+    <meta name="twitter:description" content="Generate creative Instagram captions in seconds.">
+    
+    <title>Instagram Caption Generator - Create Engaging Captions Instantly</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%25' y1='100%25' x2='100%25' y2='0%25'><stop offset='0%25' stop-color='%23833AB4'/><stop offset='50%25' stop-color='%23FD1D1D'/><stop offset='100%25' stop-color='%23F77737'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g)'/><rect x='22' y='22' width='56' height='56' rx='14' fill='none' stroke='white' stroke-width='8'/><circle cx='50' cy='50' r='14' fill='none' stroke='white' stroke-width='8'/><circle cx='68' cy='32' r='5' fill='white'/></svg>">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --gradient-instagram: linear-gradient(135deg, #833AB4 0%, #FD1D1D 50%, #F77737 100%);
+            --gradient-hover: linear-gradient(135deg, #9439c4 0%, #fd3d3d 50%, #ff8357 100%);
+            --bg-main: #FAFAFA;
+            --bg-card: #FFFFFF;
+            --text-primary: #262626;
+            --text-secondary: #8E8E8E;
+            --border-color: #DBDBDB;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-full: 50px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            padding: 32px 0 24px;
+            text-align: center;
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+        }
+
+        .logo-text {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient-instagram);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tagline {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 20px 0 32px;
+        }
+
+        .hero h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(1.75rem, 5vw, 2.25rem);
+            font-weight: 700;
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+
+        .hero h1 span {
+            background: var(--gradient-instagram);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            max-width: 420px;
+            margin: 0 auto;
+        }
+
+        /* Input Card */
+        .input-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 32px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 18px;
+            width: 20px;
+            height: 20px;
+            color: var(--text-secondary);
+            pointer-events: none;
+            transition: color 0.2s ease;
+        }
+
+        .keyword-input {
+            width: 100%;
+            height: 54px;
+            padding: 0 50px 0 52px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-full);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.2s ease;
+            outline: none;
+            background: var(--bg-card);
+        }
+
+        .keyword-input:focus {
+            border-color: transparent;
+            box-shadow: 0 0 0 3px rgba(131, 58, 180, 0.15);
+        }
+
+        .keyword-input:focus + .input-icon,
+        .input-wrapper:focus-within .input-icon {
+            color: #833AB4;
+        }
+
+        .keyword-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .keyword-input.error {
+            border-color: #FD1D1D;
+            animation: shake 0.4s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+
+        .clear-btn {
+            position: absolute;
+            right: 16px;
+            width: 28px;
+            height: 28px;
+            border: none;
+            background: var(--border-color);
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .clear-btn.visible {
+            display: flex;
+        }
+
+        .clear-btn:hover {
+            background: #c5c5c5;
+        }
+
+        .clear-btn svg {
+            width: 14px;
+            height: 14px;
+            color: var(--text-primary);
+        }
+
+        .generate-btn {
+            width: 100%;
+            height: 54px;
+            border: none;
+            border-radius: var(--radius-full);
+            background: var(--gradient-instagram);
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .generate-btn:hover:not(:disabled) {
+            transform: scale(1.02);
+            box-shadow: var(--shadow-md);
+        }
+
+        .generate-btn:active:not(:disabled) {
+            transform: scale(0.98);
+        }
+
+        .generate-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .generate-btn .btn-text {
+            transition: opacity 0.2s ease;
+        }
+
+        .generate-btn.loading .btn-text {
+            opacity: 0;
+        }
+
+        .generate-btn .spinner {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: spin 0.8s linear infinite;
+            transition: opacity 0.2s ease;
+        }
+
+        .generate-btn.loading .spinner {
+            opacity: 1;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .generate-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Results */
+        .results-section {
+            margin-bottom: 40px;
+        }
+
+        .results-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .results-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .results-title svg {
+            width: 20px;
+            height: 20px;
+            color: #833AB4;
+        }
+
+        .results-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .caption-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            transition: all 0.2s ease;
+            animation: fadeInUp 0.4s ease forwards;
+            opacity: 0;
+        }
+
+        .caption-card:nth-child(1) { animation-delay: 0.05s; }
+        .caption-card:nth-child(2) { animation-delay: 0.1s; }
+        .caption-card:nth-child(3) { animation-delay: 0.15s; }
+        .caption-card:nth-child(4) { animation-delay: 0.2s; }
+        .caption-card:nth-child(5) { animation-delay: 0.25s; }
+        .caption-card:nth-child(6) { animation-delay: 0.3s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .caption-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .caption-text {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--text-primary);
+            padding-right: 50px;
+            word-break: break-word;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            padding: 8px 14px;
+            border: 1.5px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            border-color: #833AB4;
+            color: #833AB4;
+            background: rgba(131, 58, 180, 0.05);
+        }
+
+        .copy-btn.copied {
+            border-color: #22C55E;
+            color: #22C55E;
+            background: rgba(34, 197, 94, 0.1);
+        }
+
+        .copy-btn svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* Tips Section */
+        .tips-section {
+            background: linear-gradient(135deg, rgba(131, 58, 180, 0.05) 0%, rgba(247, 119, 55, 0.05) 100%);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-bottom: 40px;
+        }
+
+        .tips-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tips-title svg {
+            width: 18px;
+            height: 18px;
+            color: #F77737;
+        }
+
+        .tips-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .tips-list li {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .tips-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 6px;
+            height: 6px;
+            background: var(--gradient-instagram);
+            border-radius: 50%;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 24px 0 32px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .footer a {
+            color: #833AB4;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 48px 24px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state svg {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        .empty-state p {
+            font-size: 0.95rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .header {
+                padding: 24px 0 16px;
+            }
+
+            .logo-icon {
+                width: 38px;
+                height: 38px;
+            }
+
+            .logo-text {
+                font-size: 1.3rem;
+            }
+
+            .hero {
+                padding: 16px 0 24px;
+            }
+
+            .input-card {
+                padding: 20px;
+            }
+
+            .keyword-input {
+                height: 50px;
+                font-size: 0.95rem;
+            }
+
+            .generate-btn {
+                height: 50px;
+                font-size: 0.95rem;
+            }
+
+            .caption-card {
+                padding: 16px;
+            }
+
+            .caption-text {
+                font-size: 0.9rem;
+                padding-right: 44px;
+            }
+
+            .copy-btn {
+                padding: 6px 10px;
+                font-size: 0.75rem;
+            }
+
+            .tips-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <svg class="logo-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="logoGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#833AB4"/>
+                            <stop offset="50%" stop-color="#FD1D1D"/>
+                            <stop offset="100%" stop-color="#F77737"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="100" height="100" rx="22" fill="url(#logoGrad)"/>
+                    <rect x="22" y="22" width="56" height="56" rx="14" fill="none" stroke="white" stroke-width="8"/>
+                    <circle cx="50" cy="50" r="14" fill="none" stroke="white" stroke-width="8"/>
+                    <circle cx="68" cy="32" r="5" fill="white"/>
+                </svg>
+                <span class="logo-text">CaptionCraft</span>
+            </div>
+            <p class="tagline">Create perfect Instagram captions instantly</p>
+        </header>
+
+        <!-- Hero -->
+        <section class="hero">
+            <h1>Turn your <span>moments</span> into captivating captions</h1>
+            <p>Enter any keyword and get creative English captions for your Instagram posts in seconds</p>
+        </section>
+
+        <!-- Input Card -->
+        <div class="input-card">
+            <div class="input-group">
+                <div class="input-wrapper">
+                    <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="M21 21l-4.35-4.35"></path>
+                    </svg>
+                    <input 
+                        type="text" 
+                        class="keyword-input" 
+                        id="keywordInput" 
+                        placeholder="Enter keyword: beach sunset, friends party..."
+                        autocomplete="off"
+                    >
+                    <button class="clear-btn" id="clearBtn" type="button">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                            <path d="M18 6L6 18M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <button class="generate-btn" id="generateBtn" type="button">
+                <span class="btn-text">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                    </svg>
+                    Generate Captions
+                </span>
+                <span class="spinner"></span>
+            </button>
+        </div>
+
+        <!-- Results Section -->
+        <section class="results-section" id="resultsSection" style="display: none;">
+            <div class="results-header">
+                <h2 class="results-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    Your Captions
+                </h2>
+            </div>
+            <div class="results-grid" id="resultsGrid"></div>
+        </section>
+
+        <!-- Empty State -->
+        <div class="empty-state" id="emptyState">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+            </svg>
+            <p>Enter a keyword above to generate creative captions</p>
+        </div>
+
+        <!-- Tips Section -->
+        <section class="tips-section">
+            <h3 class="tips-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+                Pro Tips for Great Captions
+            </h3>
+            <ul class="tips-list">
+                <li>Be specific with your keywords for more relevant results</li>
+                <li>Mix and match different caption styles for variety</li>
+                <li>Add personal touches to make captions uniquely yours</li>
+                <li>Use relevant hashtags to increase your reach</li>
+            </ul>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Made with <span style="color: #FD1D1D;">&hearts;</span> for content creators</p>
+        </footer>
+    </div>
+
+    <script>
+        // Caption Templates Library
+        const captionTemplates = {
+            inspirational: [
+                "{keyword} moments remind us why we chase our dreams. ✨ #{keyword} #inspiration #motivation",
+                "Finding beauty in the simple things. {keyword} edition. 🌟 #lifestyle #positivevibes",
+                "Every {keyword} is a chance to start fresh. Embrace the journey. 💫 #mindfulness #growth",
+                "Collect moments, not things. This {keyword} taught me that. 🦋 #grateful #blessed"
+            ],
+            aesthetic: [
+                "Lost in the {keyword} vibes. 🍃 #aesthetic #softlife #mood",
+                "Golden hour, golden memories. {keyword} perfection. ✨ #photography #instagood",
+                "Saturdays and {keyword}. Perfect combination. ☀️ #weekendvibes #chill",
+                "{keyword} aesthetic: 100%. No further questions. 💯 #style #vibes"
+            ],
+            fun: [
+                "Plot twist: {keyword} happened. And I'm not complaining. 😏 #funny #reallife",
+                "My {keyword} agenda: 1. Have fun 2. Make memories 3. Repeat. 🎉 #yolo #adventure",
+                "Warning: Extreme {keyword} levels detected. Stay back! ⚠️😂 #entertainment",
+                "Normalize {keyword} on a Tuesday. Or any day, honestly. 🎈 # rebel #outhere"
+            ],
+            deep: [
+                "Some moments are worth more than words. This {keyword} is one of them. 💭 #philosophy #life",
+                "The best things in life happen when you least expect them. {keyword} wisdom. 🌙 #wisdom",
+                "Not all who wander are lost, but some are just really enjoying their {keyword}. 🗺️ #wanderlust",
+                "{keyword} days remind me to slow down and appreciate the journey. 🛤️ #mindful #present"
+            ],
+            casual: [
+                "Just {keyword} things. ☕ #casual #daily #life",
+                "Current mood: {keyword}. Drop a 🙋 if you relate. #mood #vibes",
+                "Living my best {keyword} life. Join me? 💫 #lifestyle #fun",
+                "{keyword} hits different. Especially on days like today. 🎯 #truth #reallife"
+            ],
+            travel: [
+                "Explored somewhere new today. The {keyword} here is unreal. 🌍 #travel #adventure",
+                "Passport stamp: {keyword} edition. Next stop? Anywhere with good vibes. ✈️ #wanderlust",
+                " Collecting {keyword} moments, one at a time. 📸 #travelgram #explore",
+                "The world is full of magic {keyword}. Have you found yours? ✨ #travel #discovery"
+            ],
+            lifestyle: [
+                "Self-care looks different on different days. Today: {keyword}. 💆‍♀️ #selfcare #wellness",
+                "Building the life I want, one {keyword} at a time. 🛠️ #goals #mindset",
+                "Good vibes, good {keyword}, good times. That简单 life. ✨ #lifestyle #positive",
+                "My kind of perfect day: {keyword} and lots of coffee. ☕ #coffeelover #simplejoys"
+            ],
+            romantic: [
+                "The best memories are made with good people. {keyword} with my favorite humans. 💕 #love #friendship",
+                "You can't buy happiness but you can buy {keyword}. Same thing, really. 💗 #shopaholic #treatyourself",
+                "Surrounded by good energy and even better {keyword}. 🌸 #goodvibes #grateful",
+                "Making memories with people who matter. {keyword} is better together. 💫 #bonding #moments"
+            ]
+        };
+
+        // Template prefixes and suffixes for variety
+        const captions = [
+            { prefix: "✨", style: "elegant" },
+            { prefix: "🌟", style: "star" },
+            { prefix: "💫", style: "dreamy" },
+            { prefix: "☀️", style: "sunny" },
+            { prefix: "🌙", style: "night" },
+            { prefix: "💕", style: "love" },
+            { prefix: "🌸", style: "floral" },
+            { prefix: "🦋", style: "nature" },
+            { prefix: "🎯", style: "focus" },
+            { prefix: "🔥", style: "fire" }
+        ];
+
+        // Hashtag combinations
+        const hashtagSets = [
+            ["instagood", "photooftheday", "picoftheday", "instadaily", "explore"],
+            ["love", "like4like", "follow4follow", "instamood", "igers"],
+            ["lifestyle", "happy", "beautiful", "life", "fun"],
+            ["photography", "art", "nature", "beautiful", "travel"],
+            ["motivation", "inspiration", "goals", "success", "mindset"],
+            ["sunset", "sunrise", "nature", "landscape", "beautifulday"],
+            ["friends", "fun", "smile", "love", "goodtimes"],
+            ["weekend", "vibes", "mood", "relax", "goodvibes"]
+        ];
+
+        // DOM Elements
+        const keywordInput = document.getElementById('keywordInput');
+        const clearBtn = document.getElementById('clearBtn');
+        const generateBtn = document.getElementById('generateBtn');
+        const resultsSection = document.getElementById('resultsSection');
+        const resultsGrid = document.getElementById('resultsGrid');
+        const emptyState = document.getElementById('emptyState');
+
+        // Event Listeners
+        keywordInput.addEventListener('input', handleInputChange);
+        keywordInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') generateCaptions();
+        });
+        clearBtn.addEventListener('click', clearInput);
+        generateBtn.addEventListener('click', generateCaptions);
+
+        function handleInputChange() {
+            clearBtn.classList.toggle('visible', keywordInput.value.length > 0);
+        }
+
+        function clearInput() {
+            keywordInput.value = '';
+            clearBtn.classList.remove('visible');
+            keywordInput.focus();
+        }
+
+        async function generateCaptions() {
+            const keyword = keywordInput.value.trim();
+            
+            if (!keyword) {
+                keywordInput.classList.add('error');
+                setTimeout(() => keywordInput.classList.remove('error'), 400);
+                keywordInput.focus();
+                return;
+            }
+
+            // Show loading state
+            generateBtn.classList.add('loading');
+            generateBtn.disabled = true;
+
+            // Simulate API delay for better UX
+            await new Promise(resolve => setTimeout(resolve, 800));
+
+            // Generate captions
+            const generatedCaptions = createCaptions(keyword);
+
+            // Display results
+            displayResults(generatedCaptions);
+
+            // Reset button
+            generateBtn.classList.remove('loading');
+            generateBtn.disabled = false;
+        }
+
+        function createCaptions(keyword) {
+            const captions = [];
+            const usedTemplates = new Set();
+            
+            // Clean keyword for hashtags
+            const cleanKeyword = keyword.toLowerCase()
+                .replace(/[^a-z0-9\s]/g, '')
+                .replace(/\s+/g, '')
+                .substring(0, 20);
+
+            // Generate 6 unique captions
+            const templateCategories = Object.keys(captionTemplates);
+            
+            for (let i = 0; i < 6; i++) {
+                let caption;
+                
+                // Use different strategies for variety
+                if (i < 3) {
+                    // Template-based
+                    const category = templateCategories[i % templateCategories.length];
+                    const templates = captionTemplates[category];
+                    let attempts = 0;
+                    do {
+                        caption = templates[Math.floor(Math.random() * templates.length)];
+                        attempts++;
+                    } while (usedTemplates.has(caption) && attempts < 10);
+                    usedTemplates.add(caption);
+                    caption = caption.replace(/\{keyword\}/g, keyword);
+                } else {
+                    // Generate creative variations
+                    const variations = [
+                        `${captions[i % 4]?.prefix || '✨'} ${keyword}: where the magic happens. Because ordinary is overrated. 💫 #${cleanKeyword} #vibes #${cleanKeyword}vibes`,
+                        `Story of my life: ${keyword}. Caption this. 📸 #${cleanKeyword} #reallife #authentic`,
+                        `${keyword} > Monday. Every single time. 👑 #${cleanKeyword} #weekendmood`,
+                        `Current status: loving the ${keyword} life. 🚀 #${cleanKeyword} #lifestyle #goals`,
+                        `They say ${keyword} is good for the soul. Science agrees. 🧘‍♀️ #wellness #selfcare`,
+                        `${keyword} found. Happiness restored. 🎉 #${cleanKeyword} #goodvibes #blessed`
+                    ];
+                    caption = variations[Math.floor(Math.random() * variations.length)];
+                }
+
+                // Add hashtags based on keyword
+                const hashtagSet = hashtagSets[Math.floor(Math.random() * hashtagSets.length)];
+                const keywordHashtag = `#${cleanKeyword}`;
+                
+                caption += `\n\n${keywordHashtag} #${cleanKeyword}ed #${cleanKeyword}lover #${cleanKeyword}life`;
+                caption += ` #${hashtagSet.slice(0, 3).join(' #')}`;
+                
+                captions.push(caption);
+            }
+
+            return captions;
+        }
+
+        function displayResults(captions) {
+            resultsGrid.innerHTML = '';
+            emptyState.style.display = 'none';
+            resultsSection.style.display = 'block';
+
+            captions.forEach((caption, index) => {
+                const card = document.createElement('div');
+                card.className = 'caption-card';
+                card.innerHTML = `
+                    <p class="caption-text">${caption}</p>
+                    <button class="copy-btn" data-caption="${encodeURIComponent(caption)}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        <span>Copy</span>
+                    </button>
+                `;
+
+                // Add copy event listener
+                const copyBtn = card.querySelector('.copy-btn');
+                copyBtn.addEventListener('click', () => copyToClipboard(copyBtn, caption));
+
+                resultsGrid.appendChild(card);
+            });
+
+            // Scroll to results
+            resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        async function copyToClipboard(btn, text) {
+            try {
+                await navigator.clipboard.writeText(text);
+                
+                // Update button state
+                btn.classList.add('copied');
+                const span = btn.querySelector('span');
+                const originalText = span.textContent;
+                span.textContent = 'Copied!';
+                
+                // Update icon to checkmark
+                btn.querySelector('svg').innerHTML = '<polyline points="20 6 9 17 4 12"></polyline>';
+                
+                // Reset after 2 seconds
+                setTimeout(() => {
+                    btn.classList.remove('copied');
+                    span.textContent = originalText;
+                    btn.querySelector('svg').innerHTML = '<rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>';
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy:', err);
+            }
+        }
+
+        // Focus input on page load
+        keywordInput.focus();
+    </script>
+</body>
+</html>
